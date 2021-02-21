@@ -17,12 +17,6 @@ export const PokemonList = ({ navigation }: Props) => {
     PokemonService.fetchAllPokemons().then(urls => setUrls(urls));
   }, []);
 
-  const touchPokemon = (pokemon: Pokemon) => {
-    navigation.navigate('Details', {
-      pokemon
-    });
-  };
-
   return (
     <View style={styles.container}>
       <FlatList<PokemonUrl>
@@ -30,7 +24,15 @@ export const PokemonList = ({ navigation }: Props) => {
         data={urls}
         keyExtractor={(item, index) => `${item.url}-${item.name}-${index}`}
         renderItem={({ item }: ListRenderItemInfo<PokemonUrl>) => (
-          <PokemonCard key={item.name} url={item} onTouch={touchPokemon} />
+          <PokemonCard
+            key={item.name}
+            url={item}
+            onPress={(pokemon: Pokemon) => {
+              navigation.navigate('Details', {
+                pokemon
+              });
+            }}
+          />
         )}
       />
     </View>
@@ -41,6 +43,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#222',
     flex: 1,
-    paddingBottom: 10
+    paddingBottom: 20,
+    alignItems: 'center'
   }
 });

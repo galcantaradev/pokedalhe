@@ -5,9 +5,6 @@ export interface PokemonUrl {
 
 export interface Sprite {
   other: {
-    dream_world: {
-      front_default: string;
-    };
     'official-artwork': {
       front_default: string;
     };
@@ -40,13 +37,32 @@ export interface Type {
   slot: number;
   type: {
     name: PokemonTypeName;
-    url: string;
+  };
+}
+
+export interface Ability {
+  ability: {
+    name: string;
+  };
+  slot: number;
+}
+
+export interface Stat {
+  base_stat: number;
+  effort: number;
+  stat: {
+    name: string;
   };
 }
 
 export interface Pokemon {
   id: number | undefined;
   name: string;
+  order: number;
+  height: number;
+  weight: number;
   sprites: Sprite;
   types: Type[];
+  abilities: Ability[];
+  stats: Stat[];
 }

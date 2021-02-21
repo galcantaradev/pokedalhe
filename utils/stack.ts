@@ -1,6 +1,6 @@
 import { StackNavigationOptions } from '@react-navigation/stack';
 
-import { cardBackgroundStyles } from '../styles';
+import { pokemonTypeColors } from '../styles';
 import { getFirstPokemonType } from './getFirstPokemonType';
 
 export const screenOptions: StackNavigationOptions = {
@@ -8,17 +8,15 @@ export const screenOptions: StackNavigationOptions = {
     backgroundColor: '#f74848',
     height: 100
   },
-  headerTitleStyle: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    textTransform: 'capitalize'
-  },
+  headerBackTitle: 'Back',
   headerBackTitleStyle: {
     fontSize: 22,
     fontWeight: 'bold'
   },
   headerTintColor: '#fff',
-  headerBackTitle: 'Back'
+  headerTitleStyle: {
+    fontSize: 26
+  }
 };
 
 export const detailsScreenOptions = ({
@@ -27,9 +25,9 @@ export const detailsScreenOptions = ({
   const { pokemon } = route.params;
 
   return {
-    title: pokemon?.name,
+    title: '',
     headerStyle: {
-      backgroundColor: cardBackgroundStyles[getFirstPokemonType(pokemon)],
+      backgroundColor: pokemonTypeColors[getFirstPokemonType(pokemon)],
       height: 100
     }
   };

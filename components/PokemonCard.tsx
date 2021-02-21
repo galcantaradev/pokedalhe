@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ImageBackground, StyleSheet, Text } from 'react-native';
+import { Image, StyleSheet, Text } from 'react-native';
 
 import { PokemonService } from '../services';
 import { Pokemon, PokemonUrl } from '../types';
@@ -8,7 +8,7 @@ import { Card } from './Card';
 
 interface Props {
   url: PokemonUrl;
-  onTouch: (item: Pokemon) => void;
+  onPress: (item: Pokemon) => void;
 }
 
 const initialPokemon: Pokemon = {
@@ -18,16 +18,18 @@ const initialPokemon: Pokemon = {
     other: {
       'official-artwork': {
         front_default: ''
-      },
-      dream_world: {
-        front_default: ''
       }
     }
   },
-  types: []
+  height: 0,
+  weight: 0,
+  order: 0,
+  types: [],
+  abilities: [],
+  stats: []
 };
 
-export const PokemonCard = ({ url, onTouch }: Props) => {
+export const PokemonCard = ({ url, onPress }: Props) => {
   const [pokemon, setPokemon] = useState(initialPokemon);
 
   useEffect(() => {
@@ -40,9 +42,9 @@ export const PokemonCard = ({ url, onTouch }: Props) => {
     <Card
       key={pokemon.id}
       pokemonType={getFirstPokemonType(pokemon)}
-      onTouch={() => onTouch(pokemon)}>
+      onPress={() => onPress(pokemon)}>
       {!!getPokemonImage(pokemon) && (
-        <ImageBackground
+        <Image
           style={styles.image}
           source={{ uri: getPokemonImage(pokemon) }}
         />
