@@ -3,10 +3,12 @@ import { ImageBackground, StyleSheet, Text } from 'react-native';
 
 import { PokemonService } from '../services';
 import { Pokemon, PokemonUrl } from '../types';
+import { getFirstPokemonType, getPokemonImage } from '../utils';
 import { Card } from './Card';
 
 interface Props {
   url: PokemonUrl;
+  onTouch: (item: Pokemon) => void;
 }
 
 const initialPokemon: Pokemon = {
@@ -25,7 +27,7 @@ const initialPokemon: Pokemon = {
   types: []
 };
 
-export const PokemonCard = ({ url }: Props) => {
+export const PokemonCard = ({ url, onTouch }: Props) => {
   const [pokemon, setPokemon] = useState(initialPokemon);
 
   useEffect(() => {
@@ -34,14 +36,16 @@ export const PokemonCard = ({ url }: Props) => {
     }
   }, [url]);
 
-  const pokemonType = pokemon.types[0]?.type.name;
-
-  const imageUri = pokemon.sprites.other['official-artwork'].front_default;
-
   return (
-    <Card key={pokemon.id} pokemonType={pokemonType}>
-      {!!imageUri && (
-        <ImageBackground style={styles.image} source={{ uri: imageUri }} />
+    <Card
+      key={pokemon.id}
+      pokemonType={getFirstPokemonType(pokemon)}
+      onTouch={() => onTouch(pokemon)}>
+      {!!getPokemonImage(pokemon) && (
+        <ImageBackground
+          style={styles.image}
+          source={{ uri: getPokemonImage(pokemon) }}
+        />
       )}
       <Text style={styles.text}>{pokemon.name}</Text>
     </Card>
@@ -57,7 +61,7 @@ const styles = StyleSheet.create({
   text: {
     alignSelf: 'center',
     color: '#fff',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
     textTransform: 'capitalize'
   }
