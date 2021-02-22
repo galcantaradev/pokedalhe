@@ -42,7 +42,7 @@ export const PokemonCard = ({ url, onPress }: Props) => {
     <Card
       key={pokemon.id}
       pokemonType={getFirstPokemonType(pokemon)}
-      onPress={() => onPress(pokemon)}>
+      onPress={() => pokemon.id && onPress(pokemon)}>
       {!!getPokemonImage(pokemon) && (
         <Image
           style={styles.image}

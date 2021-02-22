@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { Fragment, ReactNode } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { Ability, Pokemon, Stat } from '../types';
@@ -38,11 +38,13 @@ export const PokemonInfo = ({ pokemon }: Props) => {
           value={
             <Text style={styles.capitalize}>
               {pokemon.abilities.map((ability: Ability, index: number) => {
-                return `${
-                  pokemon.abilities.length - 1 === index
-                    ? ability.ability.name
-                    : `${ability.ability.name}, `
-                }`;
+                return (
+                  <Fragment key={ability.ability.name}>
+                    {pokemon.abilities.length - 1 === index
+                      ? ability.ability.name
+                      : `${ability.ability.name}, `}
+                  </Fragment>
+                );
               })}
             </Text>
           }
@@ -52,7 +54,11 @@ export const PokemonInfo = ({ pokemon }: Props) => {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Base Stats</Text>
         {pokemon.stats.map((stat: Stat) => (
-          <Attribute label={stat.stat.name} value={stat.base_stat} />
+          <Attribute
+            key={stat.stat.name}
+            label={stat.stat.name}
+            value={stat.base_stat}
+          />
         ))}
       </View>
     </View>

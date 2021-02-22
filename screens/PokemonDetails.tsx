@@ -5,7 +5,11 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import { PokemonInfo } from '../components';
 import { pokemonTypeColors } from '../styles';
 import { Pokemon, Type } from '../types';
-import { getFirstPokemonType, getPokemonImage, getOrder } from '../utils';
+import {
+  getFirstPokemonType,
+  getPokemonImage,
+  getPokemonNumber
+} from '../utils';
 
 interface Props {
   route: NavigatorScreenParams<any>;
@@ -31,7 +35,7 @@ export const PokemonDetails = ({ route }: Props) => {
                   : pokemonTypeColors[type.type.name];
 
               return (
-                <Text style={{ ...styles.type, color }}>
+                <Text key={type.type.name} style={{ ...styles.type, color }}>
                   {pokemon.types.length - 1 === index
                     ? type.type.name
                     : `${type.type.name}, `}
@@ -40,7 +44,7 @@ export const PokemonDetails = ({ route }: Props) => {
             })}
           </Text>
         </View>
-        <Text style={styles.order}>#{getOrder(pokemon)}</Text>
+        <Text style={styles.order}>#{getPokemonNumber(pokemon)}</Text>
         <Image
           style={styles.image}
           source={{ uri: getPokemonImage(pokemon) }}
